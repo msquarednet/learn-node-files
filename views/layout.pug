@@ -46,8 +46,10 @@ html
                 .flash(class=`flash--${category}`)
                   p.flash__text!= message
                   button.flash__remove(onClick="this.parentElement.remove()") &times;
+    
     .content
       block content
+        p This is the default content (for this block)
 
     block scripts
       script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)

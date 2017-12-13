@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  div.wrapper.toneloc
+    p#thepara Hello!
+    img.imgclass(src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google")
+    br
+    - const upDog = dog.toUpperCase();
+    img(src='dog.jpg' alt=`${upDog.toUpperCase()}`)
+
+  h2 Header 
+    em with emphasis
+
+  h2 
+    | Header 
+    em with emphasis
+  p #{name} had a dog named #{dog}... #{time} years ago.

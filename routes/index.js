@@ -5,7 +5,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   console.log('Route: "/"')
   //res.send('Hey! It works!!!');
-  res.render('hello', {name:'ZAP', dog:'Willy', time:req.query.time})
+  res.render('hello', {name:'ZAP', dog:'Willy', time:req.query.time, timestamp:Date.now()})
 });
 
 router.get('/reverse/:thestr', (req, res) => {

@@ -1,4 +1,10 @@
+exports.myMiddleware = (req,res,next) => {
+  req.foofy = 'barbie'
+  // throw new Error('Error intentionally thrown...')
+  next()
+}
+
 exports.homePage = (req,res) => {
-  // res.render('hello', {name:'ZAP', dog:'Willy', time:req.query.time, timestamp:Date.now()})
+  console.log(req.foofy)
   res.render('index')
 }

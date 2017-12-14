@@ -3,8 +3,8 @@ const router = express.Router();
 const storeCtrl = require('../controllers/storeCtrl')
 
 
-// router.get('/', storeCtrl.homePage)
-router.get('/', storeCtrl.myMiddleware, storeCtrl.homePage)
+router.get('/', storeCtrl.homePage)
+// router.get('/', storeCtrl.myMiddleware, storeCtrl.homePage)
 
 
 

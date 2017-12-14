@@ -4,10 +4,14 @@ const storeCtrl = require('../controllers/storeCtrl')
 
 
 router.get('/', storeCtrl.homePage)
+router.get('/add', storeCtrl.addStore)
+router.post('/add', storeCtrl.createStore)
+
+
+
+
+
 // router.get('/', storeCtrl.myMiddleware, storeCtrl.homePage)
-
-
-
 
 // // Do work here
 // router.get('/', (req, res) => {

@@ -1,0 +1,7 @@
+extend layout
+include mixins/_storeForm
+block content
+  .inner
+    //- h2 #{title}
+    h2=title
+    +storeForm({foo:'bar'})

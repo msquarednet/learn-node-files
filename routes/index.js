@@ -4,7 +4,9 @@ const storeCtrl = require('../controllers/storeCtrl')
 const {catchErrors} = require('../handlers/errorHandlers')
 
 
-router.get('/', storeCtrl.homePage)
+// router.get('/', storeCtrl.homePage)
+router.get('/', catchErrors(storeCtrl.getStores))
+router.get('/stores', catchErrors(storeCtrl.getStores))
 router.get('/add', storeCtrl.addStore)
 router.post('/add', catchErrors(storeCtrl.createStore))
 

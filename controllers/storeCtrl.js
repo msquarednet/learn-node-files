@@ -5,31 +5,25 @@ const Store = mongoose.model('Store'); //get. set in models/Store.js
 
 
 exports.homePage = (req,res) => {
-  // console.log(req.foofy)
+  req.flash('error', 'Something happened.')
+  req.flash('warning', 'Something happened.')
+  req.flash('info', 'Something happened.')
+  req.flash('success', 'Something happened.')
   res.render('index')
 }
 exports.addStore = (req,res) => {
   res.render('editStore', {title:'Add Store'})
 }
+
 exports.createStore = async (req,res) => {
   //res.json(req.body)
-  const store = new Store(req.body)
-  store.coolness = 'totallytastic'
-
-  // store.save(function(err,store) {...})    //old callback hell era
-  // store.save()                             //promises era
-  //   .then(store => res.json(store))
-  //   .catch(err => {throw new Error(err)})
-
-  await store.save()                          //async/await
-  console.log('Store saved.')
-  res.redirect('/')
-  //would need to wrap all this in try/catch to catch errors, 
-  //OR...
-  //wrap entire createStore fn with catchErrors() in handlers/errorhandlers(!)
-  //this is done (wrapped) in routes/index.js.
-  //note how app.js has "app.use('/', routes)", followed by middleware errorhandling.
-  //dunno if I like this
+  // const store = new Store(req.body)
+  // await store.save()
+  const store = await (new Store(req.body)).save()
+  req.flash('success', `Successfully created ${store.name}. Care to leave a review?`)
+  res.redirect(`/store/${store.slug}`)  //slug happens in db, so need to get the store promised from db (with slug)
+  // res.redirect('/')
+  //no try/catch. using catchErrors() routes/index.js, instead
 }
 
 

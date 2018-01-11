@@ -9,6 +9,8 @@ router.get('/', catchErrors(storeCtrl.getStores))
 router.get('/stores', catchErrors(storeCtrl.getStores))
 router.get('/add', storeCtrl.addStore)
 router.post('/add', catchErrors(storeCtrl.createStore))
+router.post('/add/:_id', catchErrors(storeCtrl.updateStore))
+router.get('/stores/:_id/edit', catchErrors(storeCtrl.editStore))
 
 
 

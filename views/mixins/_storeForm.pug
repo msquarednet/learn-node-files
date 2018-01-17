@@ -17,7 +17,8 @@ mixin storeForm(store={})
     input(type="text" id="lng" name="location[coordinates][0]" value=(store.location && store.location.coordinates[0]) required)
     label(for="lat") Address Latitude
     input(type="text" id="lat" name="location[coordinates][1]" value=(store.location && store.location.coordinates[1]) required)
-    ul.tags
+    label(for="features") Features
+    ul.tags(id="features")
       each c in choices
         .tag.tag__choice
           input(type="checkbox" name="tags" id=c value=c checked=(tags.includes(c)))

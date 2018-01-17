@@ -113,6 +113,56 @@ __webpack_require__(1);
 
 var _bling = __webpack_require__(0);
 
+var _autocompete = __webpack_require__(9);
+
+var _autocompete2 = _interopRequireDefault(_autocompete);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _autocompete2.default)((0, _bling.$)('#address'), (0, _bling.$)('#lat'), (0, _bling.$)('#lng')); //note: using bling.js to imitate jQuery
+//um, runs on every single page (wth?)
+//should be just for store-edit/new page(s)
+
+/***/ }),
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+function autocomplete(addr, lat, lng) {
+  //console.log('autocomplete: ', addr,lat,lng)
+
+  if (!addr) {
+    return;
+  }
+  var dd = new google.maps.places.Autocomplete(addr); //simply worky! assumes google api key in <script></script> source
+  //note 'addListener is a google maps version of addEventListener
+  dd.addListener('place_changed', function () {
+    var place = dd.getPlace();
+    // console.log(place) //lotta stuff!
+    lat.value = place.geometry.location.lat();
+    lng.value = place.geometry.location.lng();
+  });
+  //dont submit whole form, when hitting 'enter' key on addr field
+  addr.on('keydown', function (e) {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+    }
+  });
+}
+
+exports.default = autocomplete;
+
 /***/ })
 /******/ ]);
 //# sourceMappingURL=App.bundle.js.map

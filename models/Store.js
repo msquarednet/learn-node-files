@@ -12,7 +12,8 @@ const storeSchema = new mongoose.Schema({
     type: {type:String, default:'Point'},
     coordinates: [{type:Number, required:'You must supply coordinates'}], //long,lat
     address: {type:String, required:'You must supply an address'},
-  }
+  },
+  photo: String
 })
 
 //autogen slug, on pre-save(!)

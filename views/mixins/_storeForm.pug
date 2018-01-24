@@ -2,7 +2,8 @@ mixin storeForm(store={})
   //- p storeForm mixin works! (foo=#{store.foo})
   //- form(action="/add" method="POST" enctype="multipart/form-data" class="card")
   //- form(action="/add" method="POST" class="card")
-  form(action=`/add/${store._id || ''}` method="POST" class="card")
+  //- form(action=`/add/${store._id || ''}` method="POST" class="card")
+  form(action=`/add/${store._id || ''}` method="POST" class="card" enctype="multipart/form-data")
     //- novalidate
     label(for="name") Name:
     input(type="text" name="name" value=store.name)
@@ -10,6 +11,11 @@ mixin storeForm(store={})
     textarea(name="desc")=store.desc
     - const choices = ['Wifi','Open Late','Family Friendly','Vegatarian','Licensed']
     - const tags = store.tags || []
+    //- image upload
+    label(for="photo") Photo
+    input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpg, image/jpeg")
+    if store.photo
+      img(src=`/uploads/${store.photo}` id="photo" alt=store.name width="200")
     //- address, lng, lat
     label(for="address") Address: 
     input(type="text" id="address" name="location[address]" value=(store.location && store.location.address)) 

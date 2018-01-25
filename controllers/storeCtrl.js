@@ -63,6 +63,12 @@ exports.updateStore = async (req,res) => {
 }
 
 
+exports.viewStore = async (req,res,next) => {
+  //res.json(req.params)
+  const store = await Store.findOne({slug:req.params.slug})
+  if (!store) {return next()} //invalid slug
+  res.render('storeView', {store:store}) //old school :)
+}
 
 
 

@@ -21,6 +21,7 @@ router.post('/add/:_id',
   catchErrors(storeCtrl.updateStore)
 )
 router.get('/stores/:_id/edit', catchErrors(storeCtrl.editStore))
+router.get('/store/:slug', catchErrors(storeCtrl.viewStore))
 
 
 

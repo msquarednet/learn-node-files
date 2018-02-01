@@ -17,15 +17,20 @@ const storeSchema = new mongoose.Schema({
 })
 
 //autogen slug, on pre-save(!)
-storeSchema.pre('save', function(next) {  //not arrow because need 'this'
+storeSchema.pre('save', async function(next) {  //not arrow because need 'this'
   if (!this.isModified('name')) {
     // return next() //normal syntax
     next()  //middleware...
     return; //exit function
   }
   this.slug = slug(this.name)
-  next()
   //TODO: ensure slugs are unique
+  //find other stores that have slug of foo, foo-1, foo-2, etc (now async)
+  const re = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i')
+  const storesWithSlug = await this.constructor.find({slug: re})  //Store.find doesn't exist yet
+  console.log(storesWithSlug)
+  if (storesWithSlug.length) {this.slug = `${this.slug}-${storesWithSlug.length+1}`}
+  next()
 })
 
 

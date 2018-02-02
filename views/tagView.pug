@@ -1,5 +1,5 @@
 extend layout
-//- include mixins/_tagCard or whatever
+include mixins/_storeCard
 block content
   .inner
     if (ptag) 
@@ -13,5 +13,9 @@ block content
           a.tag__link(href=`/tags/${t._id}` class=(t._id===ptag ? 'tag__link--active' : '')) 
             span.tag__text #{t._id}
             span.tag__count= t.count
+    .stores
+      each s in stores
+        +storeCard(s)
+    
 
         

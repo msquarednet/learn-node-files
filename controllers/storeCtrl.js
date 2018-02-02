@@ -71,11 +71,16 @@ exports.viewStore = async (req,res,next) => {
 }
 
 exports.getStoresByTag = async (req,res) => {
-  //res.send('worky!')
-  const tags = await Store.getTagsList()
-  // res.json(tags)
   const ptag = req.params.tag
-  res.render('tagView', {tags:tags, title:'Tags', ptag})
+  const tagQuery = ptag || {$exists:true} //store w/specific tag OR any store that has a tag
+  // const tags = await Store.getTagsList()
+  // const stores = await Store.find(blah,blah,blah) //in serial, NOT in parallel. so...
+  const tagsPromise = Store.getTagsList()
+  // const storesPromise = Store.find({tags: ptag})
+  const storesPromise = Store.find({tags: tagQuery})
+  const [tags,stores] = await Promise.all([tagsPromise,storesPromise])
+  // res.json(result)
+  res.render('tagView', {tags, stores, title:'Tags', ptag})
 }
 
 

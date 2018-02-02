@@ -70,6 +70,13 @@ exports.viewStore = async (req,res,next) => {
   res.render('storeView', {store:store}) //old school :)
 }
 
+exports.getStoresByTag = async (req,res) => {
+  //res.send('worky!')
+  const tags = await Store.getTagsList()
+  // res.json(tags)
+  const ptag = req.params.tag
+  res.render('tagView', {tags:tags, title:'Tags', ptag})
+}
 
 
 

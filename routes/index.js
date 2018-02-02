@@ -23,6 +23,8 @@ router.post('/add/:_id',
 router.get('/stores/:_id/edit', catchErrors(storeCtrl.editStore))
 router.get('/store/:slug', catchErrors(storeCtrl.viewStore))
 
+router.get('/tags',       catchErrors(storeCtrl.getStoresByTag))
+router.get('/tags/:tag',  catchErrors(storeCtrl.getStoresByTag))
 
 
 

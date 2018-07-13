@@ -12,6 +12,9 @@ const expressValidator = require('express-validator');
 const routes = require('./routes/index');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
+//config passport... put User on each req
+require('./handlers/passportHandlers')
+
 
 // create our Express app
 const app = express();

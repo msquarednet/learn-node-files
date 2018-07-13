@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-// const User = mongoose.model('User'); //get from singleton in start.js. set in models/User.js
-//not needed, yet
+const User = mongoose.model('User'); //get from singleton in start.js. set in models/User.js
+const promisify = require('es6-promisify')
 
 
 exports.loginForm = (req,res) => {
@@ -29,5 +29,15 @@ exports.validateRegister = (req,res,next) => {
     res.render('register', {title:'Register', body:req.body, flashes:req.flash()})
     return
   }
-  next()
+  next()  //step1, pass to step2
+}
+
+exports.register = async (req,res,next) => {
+  const u = new User({email:req.body.email, name:req.body.name})
+  //note: register method doesnt return a promise. it is callback-based.
+  // User.register(u, req.body.password, function(err,user) {}) //register method from passportLocalMongoose in User model.
+  const register = promisify(User.register, User)
+  await register(u, req.body.password)
+  //res.send('register() works...') //confirm in DB (Mongo Compass)
+  next()  //step2, pass to step3
 }

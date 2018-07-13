@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const storeCtrl = require('../controllers/storeCtrl')
 const userCtrl  = require('../controllers/userCtrl')
+const authCtrl  = require('../controllers/authCtrl')
 const {catchErrors} = require('../handlers/errorHandlers')
 
 
@@ -32,9 +33,13 @@ router.get('/login',       userCtrl.loginForm)
 router.get('/register',    userCtrl.registerForm)
 
 //1. validate registration data (create validateRegister middleware in userCtrl.js)
-//2. register user
-//3. log them in
-router.post('/register',   userCtrl.validateRegister)
+//2. register user (create)
+//3. log them in (authenticate)
+router.post('/register',   
+  userCtrl.validateRegister,
+  userCtrl.register,
+  authCtrl.login
+)
 
 
 

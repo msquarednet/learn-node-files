@@ -4,7 +4,7 @@ mongoose.Promise = global.Promise;  //callback?, bluebird?...  NO!, ES6 Promise 
 
 const md5 = require('md5')
 const validator = require('validator')
-const mongodbErrorHandler = require('mongoos-mongodb-errors')
+const mongodbErrorHandler = require('mongoose-mongodb-errors')
 const passportLocalMongoose = require('passport-local-mongoose')
 
 

@@ -1,6 +1,8 @@
+////routes/index.js...
 const express = require('express');
 const router = express.Router();
 const storeCtrl = require('../controllers/storeCtrl')
+const userCtrl  = require('../controllers/userCtrl')
 const {catchErrors} = require('../handlers/errorHandlers')
 
 
@@ -25,6 +27,22 @@ router.get('/store/:slug', catchErrors(storeCtrl.viewStore))
 
 router.get('/tags',       catchErrors(storeCtrl.getStoresByTag))
 router.get('/tags/:tag',  catchErrors(storeCtrl.getStoresByTag))
+
+router.get('/login',       userCtrl.loginForm)
+router.get('/register',    userCtrl.registerForm)
+
+//1. validate registration data (create validateRegister middleware in userCtrl.js)
+//2. register user
+//3. log them in
+router.post('/register',   userCtrl.validateRegister)
+
+
+
+
+
+
+
+
 
 
 

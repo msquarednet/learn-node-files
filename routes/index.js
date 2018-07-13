@@ -10,7 +10,8 @@ const {catchErrors} = require('../handlers/errorHandlers')
 // router.get('/', storeCtrl.homePage)
 router.get('/', catchErrors(storeCtrl.getStores))
 router.get('/stores', catchErrors(storeCtrl.getStores))
-router.get('/add', storeCtrl.addStore)
+// router.get('/add', storeCtrl.addStore)
+router.get('/add', authCtrl.isLoggedIn, storeCtrl.addStore)
 // router.post('/add', catchErrors(storeCtrl.createStore))
 router.post('/add', 
   storeCtrl.upload,
@@ -30,6 +31,7 @@ router.get('/tags',       catchErrors(storeCtrl.getStoresByTag))
 router.get('/tags/:tag',  catchErrors(storeCtrl.getStoresByTag))
 
 router.get('/login',       userCtrl.loginForm)
+router.post('/login',      authCtrl.login)
 router.get('/register',    userCtrl.registerForm)
 
 //1. validate registration data (create validateRegister middleware in userCtrl.js)
@@ -40,6 +42,8 @@ router.post('/register',
   userCtrl.register,
   authCtrl.login
 )
+
+router.get('/logout',       authCtrl.logout)
 
 
 

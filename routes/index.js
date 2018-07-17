@@ -45,7 +45,8 @@ router.post('/register',
 
 router.get('/logout',       authCtrl.logout)
 
-
+router.get('/account',      authCtrl.isLoggedIn, userCtrl.account)
+router.post('/account',     catchErrors(userCtrl.updateAccount))
 
 
 

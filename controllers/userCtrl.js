@@ -41,3 +41,23 @@ exports.register = async (req,res,next) => {
   //res.send('register() works...') //confirm in DB (Mongo Compass)
   next()  //step2, pass to step3
 }
+
+exports.account = (req,res) => {
+  res.render('account', {title:'Account:Edit'})
+}
+exports.updateAccount = async (req,res) => {
+  // res.send('updateAccount()...')
+  const updates = {
+    name: req.body.name,
+    email: req.body.email
+  }
+  // const u = await findOneAndUpdate(query, updates, options)
+  const u = await User.findOneAndUpdate(
+    { _id:req.user._id},
+    { $set: updates}, //ONLY update specified
+    { new:true, runValidators:true, context:'query'}       //return NEW (not old) data
+  )
+  //res.json(u)
+  req.flash('success', 'Account profile has been updated.')
+  res.redirect('back')  //res.redirect('/account')
+}

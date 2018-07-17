@@ -45,8 +45,7 @@ exports.register = async (req,res,next) => {
 exports.account = (req,res) => {
   res.render('account', {title:'Account:Edit'})
 }
-exports.updateAccount = async (req,res) => {
-  // res.send('updateAccount()...')
+exports.updateAccount = async (req,res) => {  // res.send('updateAccount()...')
   const updates = {
     name: req.body.name,
     email: req.body.email

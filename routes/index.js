@@ -48,7 +48,13 @@ router.get('/logout',       authCtrl.logout)
 router.get('/account',      authCtrl.isLoggedIn, userCtrl.account)
 router.post('/account',     catchErrors(userCtrl.updateAccount))
 
-
+//1. check if email exists
+//2. set reset token, expirydate
+//3. email both
+//4. reset password form
+router.post('/account/forgot',         catchErrors(authCtrl.forgot))
+router.get( '/account/reset/:token',   catchErrors(authCtrl.reset))
+router.post('/account/reset/:token',   authCtrl.passwordConfirm, catchErrors(authCtrl.update))
 
 
 

@@ -12,9 +12,11 @@ const userSchema = new mongoose.Schema({
   email:{type:String, unique:true, lowercase:true, trim:true, 
     validate: [validator.isEmail, 'Please enter a valid email address'],
     required: 'Please enter an email address'},
-  name: {type:String, trim:true, required: 'Please enter a name'}
+  name: {type:String, trim:true, required: 'Please enter a name'},
   //password: taken care of by passport-local-mongoose
   //gravatar: no, use 'generated' (virtual) field, below
+  resetPasswordToken: String,
+  resetPasswordExpiry:  Date
 })
 
 userSchema.virtual('gravatar').get(function() {  // return 'https://www.dropbox.com/s/r90g69yjzppxxxl/me-300.png?dl=1'

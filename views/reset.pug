@@ -1,0 +1,18 @@
+extend layout
+
+block content
+  .inner
+    //- h2=title
+    //- pre=h.dump(user)  
+    form.form(method="POST")
+      //- NOTE: action="" removed so POST to self (url)
+      h2 Reset Your Password
+
+      label(for="password") Password
+      input(type="password" name="password")
+      
+      label(for="password_confirm") Confirm Password
+      input(type="password" name="password_confirm")
+      
+      input.button(type="submit" value="Reset Password")    
+        

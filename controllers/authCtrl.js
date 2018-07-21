@@ -5,6 +5,8 @@ const mongoose = require('mongoose')
 const User = mongoose.model('User'); //get from singleton in start.js. set in models/User.js
 const promisify = require('es6-promisify')
 
+const mail = require('../handlers/mailHandlers')
+
 
 //local strategy
 exports.login = passport.authenticate('local', {
@@ -42,9 +44,17 @@ exports.forgot = async(req,res) => {
   u.resetPasswordExpiry= Date.now()+3600000 //1 hr from now //note:update schema
   await u.save()
   //3. send email with token
-  //cheat, SKIP EMAIL, for now...
   const resetUrl = `http://${req.headers.host}/account/reset/${u.resetPasswordToken}`
-  req.flash('success', `You have been emailed a password reset link: ${resetUrl}`)
+  req.flash('success', `You have been emailed a password reset link.`)
+  await mail.send({
+    user: u,
+    subject: 'Reset Password',
+    resetURL: resetUrl,
+    filename: 'password-reset'  //pub file
+  })
+  //cheat, SKIP EMAIL, for now...
+  // const resetUrl = `http://${req.headers.host}/account/reset/${u.resetPasswordToken}`
+  // req.flash('success', `You have been emailed a password reset link: ${resetUrl}`)
   //4. redirect to login page
   res.redirect('/login')
 }

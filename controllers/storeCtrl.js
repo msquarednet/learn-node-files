@@ -36,6 +36,7 @@ exports.resize = async (req,res,next) => {
 }
 //step 3
 exports.createStore = async (req,res) => {
+  req.body.author = req.user._id
   const store = await (new Store(req.body)).save()
   req.flash('success', `Successfully created ${store.name}. Care to leave a review?`)
   res.redirect(`/store/${store.slug}`)  //slug happens in db, so need to get the store promised from db (with slug)
@@ -46,10 +47,21 @@ exports.getStores = async (req,res) => {
   res.render('storeList', {title:'Store Listing', stores:stores})
 }
 
+const confirmOwner = (store, user) => {
+  // console.log(store.author, user._id) //ObjectID, String
+  // console.log(store.author.toString() === user._id.toString())
+  if (!store.author) {
+    throw Error('No author? NO EDITING!.')
+  } else if (!store.author.equals(user._id)) {
+    throw Error('You must own a store to edit it.')
+  }
+}
+
 exports.editStore = async (req,res) => {
   //res.json(req.params)
   const store = await Store.findOne({_id:req.params._id})
   //TODO: confirm is owner of store
+  confirmOwner(store, req.user) //middleware instead?
   res.render('storeEdit', {title:`Edit Store: ${store.name}`, store}) //store:store pre ES6
 }
 
@@ -63,9 +75,10 @@ exports.updateStore = async (req,res) => {
 }
 
 
-exports.viewStore = async (req,res,next) => {
+exports.viewStore = async (req,res,next) => { //getStoreBySlug
   //res.json(req.params)
-  const store = await Store.findOne({slug:req.params.slug})
+  const store = await Store.findOne({slug:req.params.slug}).populate('author')  
+  //populate :)
   if (!store) {return next()} //invalid slug
   res.render('storeView', {store:store}) //old school :)
 }

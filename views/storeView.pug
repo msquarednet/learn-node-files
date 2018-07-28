@@ -2,7 +2,7 @@ extend layout
 block content
   //- .inner
     //- h2=title
-    //- pre= h.dump(store)
+  pre= h.dump(store)
   .single
     .single__hero
       img.single__image(src=`/uploads/${store.photo || 'store.png'}`)

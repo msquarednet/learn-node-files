@@ -13,7 +13,12 @@ const storeSchema = new mongoose.Schema({
     coordinates: [{type:Number, required:'You must supply coordinates'}], //long,lat
     address: {type:String, required:'You must supply an address'},
   },
-  photo: String
+  photo: String,
+  author: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User', //model
+    required: 'Please choose an Author'
+  }
 })
 
 //autogen slug, on pre-save(!)

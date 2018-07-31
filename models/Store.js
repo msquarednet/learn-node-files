@@ -40,21 +40,53 @@ storeSchema.pre('save', async function(next) {  //not arrow because need 'this'
 
 storeSchema.statics.getTagsList = function() {//this
   //$unwind... 1 store with 3 tags becomes 3 stores, each with 1 tag
-  return this.aggregate([
-    {$unwind: '$tags'},    //tags is a field
-    {$group: { _id:'$tags', count:{$sum:1} }},
-    {$sort:  { count:-1 }}
-  ])
   // return this.aggregate([
   //   {$unwind: '$tags'},    //tags is a field
   //   {$group: { _id:'$tags', count:{$sum:1} }},
   //   {$sort:  { count:-1 }}
-  // ]).cursor({batchSize:1000, async:true}).exec()
-  // this.aggregate([
-  //   {$unwind: '$tags'},    //tags is a field
-  //   {$group: { _id:'$tags', count:{$sum:1} }},
-  //   {$sort:  { count:-1 }}
-  // ]).then(function(res) {return res})
+  // ])   //this worked until...?
+
+let arr = []
+var cursor = this.aggregate([
+    {$unwind: '$tags'},    //tags is a field
+    {$group: { _id:'$tags', count:{$sum:1} }},
+    {$sort:  { count:-1 }}
+  ]).cursor( {batchSize:1000} ).exec()//.stream()
+
+cursor.on('data', doc => {
+  // console.log('doc: ', doc, typeof(doc))
+  if (doc) {arr.push(doc)}
+})
+cursor.on('end', doc => {
+  console.log('stream/cursor ended')
+  // console.log('arr: ', arr)
+  // console.log('stream: ', stream)
+  return Promise.resolve(arr) 
+})
+//FAIL :(
+
+
+//   let doc, cursor
+// cursor = this.aggregate([
+//   {$unwind: '$tags'},    //tags is a field
+//   {$group: { _id:'$tags', count:{$sum:1} }},
+//   {$sort:  { count:-1 }}
+// ]).cursor({batchSize:1000, async:true}).exec()
+
+// return doNext(cursor.next())
+
+// function doNext(promise) {
+//   promise.then(doc => {
+//     if (doc) {
+//       console.log('doc: ', doc)
+//       doNext(cursor.next())
+//     }
+//   })
+// }
+
+// while( doc = await cursor.next() ) {console.log(doc)}
+// return doc
+
 }
 
 

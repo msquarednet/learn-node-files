@@ -7,8 +7,8 @@ mixin storeForm(store={})
     //- novalidate
     label(for="name") Name:
     input(type="text" name="name" value=store.name)
-    label(for="desc") Description:
-    textarea(name="desc")=store.desc
+    label(for="description") Description:
+    textarea(name="description")=store.description
     - const choices = ['Wifi','Open Late','Family Friendly','Vegatarian','Licensed']
     - const tags = store.tags || []
     //- image upload

@@ -5,7 +5,7 @@ mongoose.Promise = global.Promise;  //callback?, bluebird?...  NO!, ES6 Promise 
 const storeSchema = new mongoose.Schema({
   name: {type:String, trim:true, required: 'Please enter a store name'},
   slug: String,
-  desc: {type:String, trim:true},
+  description: {type:String, trim:true},
   tags: [String],
   created: {type:Date, default:Date.now},
   location: {
@@ -45,6 +45,16 @@ storeSchema.statics.getTagsList = function() {//this
     {$group: { _id:'$tags', count:{$sum:1} }},
     {$sort:  { count:-1 }}
   ])
+  // return this.aggregate([
+  //   {$unwind: '$tags'},    //tags is a field
+  //   {$group: { _id:'$tags', count:{$sum:1} }},
+  //   {$sort:  { count:-1 }}
+  // ]).cursor({batchSize:1000, async:true}).exec()
+  // this.aggregate([
+  //   {$unwind: '$tags'},    //tags is a field
+  //   {$group: { _id:'$tags', count:{$sum:1} }},
+  //   {$sort:  { count:-1 }}
+  // ]).then(function(res) {return res})
 }
 
 

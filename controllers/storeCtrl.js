@@ -93,8 +93,6 @@ exports.getStoresByTag = async (req,res) => {
   const storesPromise = Store.find({tags: tagQuery})
   const [tags,stores] = await Promise.all([tagsPromise,storesPromise])
   // res.json(result)
-  console.log('controller tags:', tags)
-  console.log('controller stores (len):', stores.length)
   res.render('tagView', {tags, stores, title:'Tags', ptag})
 }
 

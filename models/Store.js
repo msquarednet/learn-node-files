@@ -40,30 +40,30 @@ storeSchema.pre('save', async function(next) {  //not arrow because need 'this'
 
 storeSchema.statics.getTagsList = function() {//this
   //$unwind... 1 store with 3 tags becomes 3 stores, each with 1 tag
-  // return this.aggregate([
-  //   {$unwind: '$tags'},    //tags is a field
-  //   {$group: { _id:'$tags', count:{$sum:1} }},
-  //   {$sort:  { count:-1 }}
-  // ])   //this worked until...?
-
-let arr = []
-var cursor = this.aggregate([
+  return this.aggregate([
     {$unwind: '$tags'},    //tags is a field
     {$group: { _id:'$tags', count:{$sum:1} }},
     {$sort:  { count:-1 }}
-  ]).cursor( {batchSize:1000} ).exec()//.stream()
+  ])   //this worked until...?  note: npm i mongoose@4.12.2 fixed it, better 4.13.14
 
-cursor.on('data', doc => {
-  // console.log('doc: ', doc, typeof(doc))
-  if (doc) {arr.push(doc)}
-})
-cursor.on('end', doc => {
-  console.log('stream/cursor ended')
-  // console.log('arr: ', arr)
-  // console.log('stream: ', stream)
-  return Promise.resolve(arr) 
-})
-//FAIL :(
+// let arr = []
+// var cursor = this.aggregate([
+//     {$unwind: '$tags'},    //tags is a field
+//     {$group: { _id:'$tags', count:{$sum:1} }},
+//     {$sort:  { count:-1 }}
+//   ]).cursor( {batchSize:1000} ).exec()//.stream()
+
+// cursor.on('data', doc => {
+//   // console.log('doc: ', doc, typeof(doc))
+//   if (doc) {arr.push(doc)}
+// })
+// cursor.on('end', doc => {
+//   console.log('stream/cursor ended')
+//   // console.log('arr: ', arr)
+//   // console.log('stream: ', stream)
+//   return Promise.resolve(arr) 
+// })
+// //FAIL :(
 
 
 //   let doc, cursor

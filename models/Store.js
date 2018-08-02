@@ -21,6 +21,14 @@ const storeSchema = new mongoose.Schema({
   }
 })
 
+//Indexes
+storeSchema.index({ //compound index
+  name: 'text', 
+  description: 'text'
+})
+
+
+
 //autogen slug, on pre-save(!)
 storeSchema.pre('save', async function(next) {  //not arrow because need 'this'
   if (!this.isModified('name')) {

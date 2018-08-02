@@ -58,6 +58,28 @@ router.post('/account/reset/:token',   authCtrl.passwordConfirm, catchErrors(aut
 
 
 
+/* API */
+// router.get('/api/v1/search', )
+router.get('/api/search',              catchErrors(storeCtrl.searchStores))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
